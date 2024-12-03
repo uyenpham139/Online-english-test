@@ -2,11 +2,12 @@
 CREATE TABLE Users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    user_password VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL,
     first_name VARCHAR(50),
-    middle_name VARCHAR(50),
-    last_name VARCHAR(50)
+    middle_name VARCHAR(100),
+    last_name VARCHAR(50),
+    role ENUM ("Admin", "Staff", "Student")
 );
 
 -- Create the Admin, Staff, and Students tables
@@ -22,16 +23,53 @@ CREATE TABLE Staff (
 
 CREATE TABLE Students (
     id INT PRIMARY KEY,
-    level VARCHAR(50),
+    level ENUM('Beginner', 'Intermediate', 'Experienced', 'Advanced', 'Expert'),
     FOREIGN KEY (id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE PROCEDURE insert_user(
+    IN p_user_name VARCHAR(50),
+    IN p_user_password VARCHAR(255),
+    IN p_email VARCHAR(100),
+    IN p_first_name VARCHAR(50),
+    IN p_middle_name VARCHAR(100),
+    IN p_last_name VARCHAR(50),
+    IN p_user_role ENUM("Admin", "Staff", "Student"),
+    IN p_level ENUM('Beginner', 'Intermediate', 'Experienced', 'Advanced', 'Expert')
+)
+BEGIN
+    declare exit handler for sqlexception rollback;
+
+    start transaction;
+    -- Insert into the users table
+    INSERT INTO Users (username, user_password, email, firstname, middlename, lastname, role)
+    VALUES (p_user_name, p_user_password, p_email, p_first_name, p_middle_name, p_last_name, p_user_role);
+
+    -- Get the newly inserted user ID
+    SET @new_user_id = LAST_INSERT_ID();
+
+    -- Insert into the corresponding role table
+    CASE p_user_role
+        WHEN 'Admin' THEN
+            INSERT INTO Admin(id)
+            VALUES (@new_user_id);
+        WHEN 'Staff' THEN
+            INSERT INTO Staff(id)
+            VALUES (@new_user_id);
+        WHEN 'Student' THEN
+            INSERT INTO Students(id, level)
+            VALUES (@new_user_id, p_level);
+    END CASE;
+
+    commit;
+END;
 
 -- Create the Test table
 CREATE TABLE Test (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     topic VARCHAR(255),
-    level VARCHAR(50),
+    level ENUM('Beginner', 'Intermediate', 'Experienced', 'Advanced', 'Expert'),
     start_time DATETIME,
     end_time DATETIME,
     staff_id INT,
@@ -52,10 +90,10 @@ CREATE TABLE Question (
 -- Create the Answer table
 CREATE TABLE Answer (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    correct_content TEXT NOT NULL,
-    wrong_content TEXT,
+    content TEXT NOT NULL,
     question_id INT,
     test_id INT,
+    correct BOOLEAN,
     FOREIGN KEY (question_id) REFERENCES Question(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (test_id) REFERENCES Test(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

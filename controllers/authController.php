@@ -28,6 +28,36 @@ class AuthController extends User{
     }
 
     public function signupUser() {
+        if($this->emptySignupInput() == false) {
+            header("location: ../index.php?page=signup&error=emptyinput");
+            exit();
+        }
+        
+        if($this->invalidName() == false) {
+            header("location: ../index.php?page=signup&error=invalidname");
+            exit();
+        }
+        
+        if($this->invalidEmail() == false) {
+            header("location: ../index.php?page=signup&error=invalidemail");
+            exit();
+        }
+        
+        if($this->validatePassword() == false) {
+            header("location: ../index.php?page=signup&error=invalidpassword");
+            exit();
+        }
+        
+        if($this->passwordMatch() == false) {
+            header("location: ../index.php?page=signup&error=passwordmatch");
+            exit();
+        }
+        
+        if($this->userTaken() == false) {
+            header("location: ../index.php?page=signup&error=usernameoremailtaken");
+            exit();
+        }
+
         $this->setUser($this->username, $this->password, $this->email, $this->firstname, $this->middlename, $this->lastname, $this->role, $this->studentLevel);
     }
 
