@@ -2,11 +2,11 @@
 
 class User extends Dbh {
 
-    protected function getUser($username, $email, $pwd) {
+    protected function getUser($email, $pwd) {
 
-        $query = $this->connect()->prepare("SELECT user_password FROM Users WHERE username=? OR email=?;");
+        $query = $this->connect()->prepare("SELECT user_password FROM Users WHERE email=?;");
 
-        $query->bind_param("ss", $username, $email);
+        $query->bind_param("s", $email);
 
         if(!$query->execute()) {
             $query = null;
@@ -57,7 +57,7 @@ class User extends Dbh {
             $hashedPassword = password_hash($pwd, PASSWORD_DEFAULT);
             // Send COOKIE
             if(isset($_REQUEST['remember-me'])){
-                setcookie("username", $username, time() + 20, "/");
+                setcookie("email", $email, time() + 20, "/");
                 setcookie("password", $hashedPassword, time() + 20, "/");
             }
             session_start();
@@ -72,16 +72,16 @@ class User extends Dbh {
         $query = null;
     }
 
-    protected function setUser($username, $pwd, $email, $firstname, $middlename, $lastname, $role, $student_level) {
+    protected function setUser($pwd, $email, $firstname, $lastname, $role) {
 
         // Table users
         // $query = $this->connect()->prepare("INSERT INTO Users(username, user_password, email, first_name, middle_name, last_name) VALUES(?, ?, ?, ?, ?, ?);");
 
-        $query = $this->connect()->prepare("CALL insert_user(?, ?, ?, ?, ?, ?, ?, ?)");
+        $query = $this->connect()->prepare("CALL insert_user(?, ?, ?, ?, ?, ?, ?)");
 
         $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
         
-        $query->bind_param("ssssssss", $username, $hashedPwd, $email, $firstname, $middlename, $lastname, $role, $student_level);
+        $query->bind_param("sssssis", $hashedPwd, $email, $firstname, $lastname, $role, 0, "Beginner");
 
         if(!$query->execute()) {
             $query = null;

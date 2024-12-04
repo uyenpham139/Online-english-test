@@ -1,7 +1,6 @@
 -- Create the Users table
 CREATE TABLE Users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
     user_password VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL,
     first_name VARCHAR(50),
@@ -28,7 +27,6 @@ CREATE TABLE Students (
 );
 
 CREATE PROCEDURE insert_user(
-    IN p_user_name VARCHAR(50),
     IN p_user_password VARCHAR(255),
     IN p_email VARCHAR(100),
     IN p_first_name VARCHAR(50),
@@ -42,8 +40,8 @@ BEGIN
 
     start transaction;
     -- Insert into the users table
-    INSERT INTO Users (username, user_password, email, firstname, middlename, lastname, role)
-    VALUES (p_user_name, p_user_password, p_email, p_first_name, p_middle_name, p_last_name, p_user_role);
+    INSERT INTO Users (user_password, email, firstname, middlename, lastname, role)
+    VALUES (p_user_password, p_email, p_first_name, p_middle_name, p_last_name, p_user_role);
 
     -- Get the newly inserted user ID
     SET @new_user_id = LAST_INSERT_ID();

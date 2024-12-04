@@ -1,34 +1,25 @@
 <?php
 
-class AuthController extends User{
-    private $username;
-    private $password;
-    private $email;
+class RegisterController extends User{
     private $firstname;
-    private $middlename;
     private $lastname;
+    private $email;
+    private $password;
+    private $repeatPassword;
     private $role;
-    private $studentLevel;
-    private $repeatedPassword;
 
-    public function __construct($username, $password, $email, $firstname, $middlename, $lastname, $role, $studentLevel, $repeatedPassword) {
-        $this->username = $username;
-        $this->password = $password;
-        $this->email = $email;
+    public function __construct($firstname, $lastname, $email, $password, $repeatPassword, $role) {
         $this->firstname = $firstname;
-        $this->middlename = $middlename;
         $this->lastname = $lastname;
+        $this->email = $email;
+        $this->password = $password;
+        $this->repeatPassword = $repeatPassword;
         $this->role = $role;
-        $this->studentLevel = $studentLevel;
-        $this->repeatedPassword = $repeatedPassword;
-    }
-
-    public function loginUser() {
-        $this->getUser($this->username, $this->password, $this->email);
     }
 
     public function signupUser() {
-        if($this->emptySignupInput() == false) {
+        
+        if($this->emptyInput() == false) {
             header("location: ../index.php?page=signup&error=emptyinput");
             exit();
         }
@@ -58,29 +49,33 @@ class AuthController extends User{
             exit();
         }
 
-        $this->setUser($this->username, $this->password, $this->email, $this->firstname, $this->middlename, $this->lastname, $this->role, $this->studentLevel);
+        $this->setUser($this->password, $this->email, $this->firstname, $this->lastname, $this->role);
     }
 
     // Check whether the input is empty
-    public function emptyLoginInput() {
+    private function emptyInput() {
         $result = true;
         // Check if these inputs are empty
-        if(empty($this->username) || empty($this->password)) {
+        if(empty($this->firstname) || empty($this->lastname) 
+            || empty($this->email) || empty($this->password) 
+            || empty($this->repeatPassword) ) {
+                $result = false;
+        }
+        else $result = true;
+        return $result;
+    }
+
+    // Check validity
+    private function invalidName() {
+        $result = true;
+        if(!preg_match('/[a-zA-Z ]/', $this->firstname) || !preg_match('/[a-zA-Z ]/', $this->lastname)) {
             $result = false;
         }
         else $result = true;
         return $result;
     }
 
-    private function emptySignupInput() {
-        // Check if these inputs are empty
-        if(empty($this->firstname) || empty($this->middlename) || empty($this->lastname) || empty($this->email) || empty($this->password) || empty($this->repeatPassword)) {
-            return false;
-        }
-        return true;
-    }
-
-    public function invalidEmail() {
+    private function invalidEmail() {
         $result = true;
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $result = false;
@@ -88,16 +83,7 @@ class AuthController extends User{
         return $result;
     }
 
-    private function invalidName() {
-        $result = true;
-        if(!preg_match('/[a-zA-Z ]/', $this->firstname) || !preg_match('/[a-zA-Z ]/', $this->middlename) || !preg_match('/[a-zA-Z ]/', $this->lastname)) {
-            $result = false;
-        }
-        else $result = true;
-        return $result;
-    }
-
-    public function validatePassword() {
+    private function validatePassword() {
         $result = true;
         // Check password length
         if(strlen($this->password) < 8) {
@@ -109,11 +95,11 @@ class AuthController extends User{
             $result = false;
         }
         return $result;
-    }    
+    }
 
     private function passwordMatch() {
         $result = true;
-        if($this->password !== $this->repeatedPassword) {
+        if($this->password !== $this->repeatPassword) {
             $result = false;
         }
         return $result;
@@ -127,4 +113,5 @@ class AuthController extends User{
         else $result = true;
         return $result;
     }
+    
 }
