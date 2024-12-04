@@ -12,7 +12,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="FE/css/style.css">
 
 </head>
 <body>
@@ -23,7 +23,7 @@
    
 <div class="form-container">
 
-   <form action="" method="post">
+   <form action="include/register.inc.php" method="post">
       <h3>register now</h3>
       <input type="text" name="name" placeholder="enter your name" required class="box">
       <input type="email" name="email" placeholder="enter your email" required class="box">
@@ -35,7 +35,7 @@
          <option value="Admin">Admin</option>
       </select>
       <input type="submit" name="submit" value="register now" class="btn">
-      <p>already have an account? <a href="login.php">login now</a></p>
+      <p>Already have an account? <a href="index.php?page=login">Login now</a></p>
    </form>
 
 </div>

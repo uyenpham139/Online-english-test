@@ -81,7 +81,12 @@ class User extends Dbh {
 
         $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
         
-        $query->bind_param("sssssis", $hashedPwd, $email, $firstname, $lastname, $role, 0, "Beginner");
+         // Define variables for the literals
+        $defaultStatus = 0;
+        $defaultLevel = "Beginner";
+
+        // Bind variables instead of literals
+        $query->bind_param("sssssis", $hashedPwd, $email, $firstname, $lastname, $role, $defaultStatus, $defaultLevel);
 
         if(!$query->execute()) {
             $query = null;

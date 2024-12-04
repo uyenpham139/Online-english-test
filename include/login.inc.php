@@ -3,12 +3,12 @@ if(isset($_POST['submit'])) {
 
     // Grabbing the data
     $email = $_POST["email"];
-    $password = $_POST["pwd"];
+    $password = $_POST["password"];
 
     // Instantiate Login class
     include "../models/dbh.model.php";
-    include "../models/login.model.php";
-    include "../controllers/backend/logincontroller.contr.php";
+    include "../models/users.model.php";
+    include "../controllers/loginController.php";
     $login = new LoginController($email, $password);
 
     // Running error handlers and user login

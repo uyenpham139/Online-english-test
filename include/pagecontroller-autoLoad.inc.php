@@ -5,12 +5,12 @@ function myAutoLoader ($className) {
     $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
     if (strpos($url, 'includes') !== false) {
-        $path = '../controllers/frontend/';
+        $path = '../layout/';
     }
     else {
-        $path = 'controllers/frontend/';
+        $path = 'layout/';
     }
-    $extension = '.contr.php';
+    $extension = '.php';
     require_once $path . $className . $extension;
 }
 

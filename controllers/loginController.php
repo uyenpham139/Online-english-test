@@ -17,7 +17,7 @@ class LoginController extends User{
     public function emptyInput() {
         $result = true;
         // Check if these inputs are empty
-        if(empty($this->username) || empty($this->password)) {
+        if(empty($this->email) || empty($this->password)) {
             $result = false;
         }
         else $result = true;
