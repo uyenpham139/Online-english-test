@@ -280,10 +280,25 @@ section{
    text-decoration: underline;
 }
 
-.header .header-2 .flex .logo{
-   font-size: 2.5rem;
-   color:var(--purple);
+
+.header .header-2 .flex .logo {
+   display: flex; /* Use flexbox for horizontal alignment */
+   align-items: center; /* Align items vertically */
+   text-decoration: none; /* Optional: remove underline from link */
 }
+
+.header .header-2 .flex .logo img {
+   width: 80px; /* Set image width */
+   height: 80px; /* Set image height */
+   margin-right: 10px; /* Add space between the image and the text */
+}
+
+.header .header-2 .flex .logo span {
+   font-size: 2.5rem; /* Adjust font size */
+   color: var(--purple); /* Use your custom variable for color */
+   font-weight: bold; /* Optional: add bold styling */
+}
+
 
 .header .header-2 .flex .navbar a{
    margin:0 1rem;
