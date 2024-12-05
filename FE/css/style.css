@@ -924,12 +924,14 @@ button {
    border: 1px solid #ddd;
    border-radius: 8px;
    background-color: #fefefe;
+   margin-left: 40px;
  }
  
  /* Question Text */
  .question-item h5 {
-   font-size: 1.3rem; /* Larger text for questions */
+   font-size: 1.5rem; /* Larger text for questions */
    margin-bottom: 15px;
+
  }
 
 .form-check {
@@ -937,15 +939,43 @@ button {
  }
 
 .form-check-label {
-   font-size: 1.1rem; /* Slightly larger text for options */
+   font-size: 1.4rem; /* Slightly larger text for options */
    cursor: pointer;
+   margin-right: 10px;
  }
  
  .form-check-input {
-   transform: scale(1.2); /* Larger radio buttons */
-   margin-right: 10px;
+   transform: scale(1.5); /* Larger radio buttons */
+   margin-right: 12px;
  }
 
+
+/* Ranking Section */
+.ranking-section {
+   font-size: 20px;
+   margin-top: 40px;
+   text-align: center;
+ }
+ 
+ table {
+   width: 80%;
+   margin: 20px auto;
+ }
+ 
+ th, td {
+   padding: 12px 20px;
+   text-align: center;
+ }
+ 
+ th {
+   background-color: #0056b3;
+   color: white;
+ }
+ 
+ td {
+   background-color: #f9f9f9;
+ }
+ 
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -953,6 +983,9 @@ button {
    min-width: 100%;
  }
 }
+
+
+
 
 
 /* media queries  */
@@ -1011,3 +1044,4 @@ button {
    }
 
 }
+
