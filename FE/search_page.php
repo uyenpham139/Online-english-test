@@ -12,7 +12,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="FE/css/style.css">
+   <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -21,21 +21,40 @@
 
 <div class="heading">
    <h3>search page</h3>
-   <p> <a href="index.php?page=home">home</a> / search </p>
+   <p> <a href="home.php">home</a> / search </p>
 </div>
 
+
+
 <section class="search-form">
-   <form action="include/student.inc.php" method="post">
-      <input type="text" name="search" placeholder="search tests..." class="box">
-      <input type="submit" name="submit_search" value="search" class="btn">
+   <form id="searchForm">
+      <input
+         type="text"
+         id="searchInput"
+         name="keyword"
+         placeholder="Search items..."
+         class="box"
+      />
+      <select id="levels">
+         <option value="">All Levels</option>
+         <option value="Beginner">Beginner</option>
+         <option value="Expert">Expert</option>
+      </select>
+      <button type="submit" class="btn">Search</button>
    </form>
 </section>
+
+<section id="searchResults" class="results">
+   <!-- Search results will be displayed here -->
+</section>
+
+
 
 
 <?php include 'footer.php'; ?>
 
 <!-- custom js file link  -->
-<script src="FE/js/script.js"></script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
