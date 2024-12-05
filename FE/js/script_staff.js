@@ -6,15 +6,15 @@ document.getElementById("addQuestionBtn").addEventListener("click", function () 
     const questionItemHtml = `
     <div class="question-item" data-id="${questionId}">
         <h6 contenteditable="true">New Question (Click to Edit)</h6>
-        <input type="file" class="form-control" id="questionImage" accept="image/png, image/jpeg">
+        <input type="file" class="form-control" name="question" id="questionImage" accept="image/png, image/jpeg">
         <img id="previewImage" class="image-preview" alt="Image Preview">
-        <p contenteditable="true">A. Option A</p>
-        <p contenteditable="true">B. Option B</p>
-        <p contenteditable="true">C. Option C</p>
-        <p contenteditable="true">D. Option D</p>
+        <p>A. <span contenteditable="true"> Option A</span></p>
+        <p>B. <span contenteditable="true"> Option B</span></p>
+        <p>C. <span contenteditable="true"> Option C</span></p>
+        <p>D. <span contenteditable="true"> Option D</span></p>
         <div class="correct-answer">
             <label for="correct-answer-${questionId}">Correct Answer:</label>
-            <select id="correct-answer-${questionId}" class="form-control">
+            <select id="correct-answer-${questionId}" name="correct-answer" class="form-control">
                 <option value="A">Option A</option>
                 <option value="B">Option B</option>
                 <option value="C">Option C</option>

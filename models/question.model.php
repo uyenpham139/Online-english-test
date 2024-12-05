@@ -10,7 +10,7 @@ class Question extends Dbh {
 
         if (!$query->execute()) {
             $query->close();
-            header("location: ../index.php?page=create-question&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed");
             exit();
         }
 
@@ -24,7 +24,7 @@ class Question extends Dbh {
 
         if (!$query->execute()) {
             $query->close();
-            header("location: ../index.php?page=manage-questions&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed");
             exit();
         }
 
@@ -38,7 +38,7 @@ class Question extends Dbh {
 
         if (!$query->execute()) {
             $query->close();
-            header("location: ../index.php?page=questions&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed");
             exit();
         }
 

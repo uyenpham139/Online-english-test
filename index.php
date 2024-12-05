@@ -8,6 +8,10 @@
         $page = new Admin();
         $page->index();
     }
+    else if (strpos($url, 'manage') !== false) {
+        $page = new Staff();
+        $page->index();
+    }
     else if (strpos($url, 'login') !== false) {
         $page = new Login();
         $page->index();
@@ -22,6 +26,10 @@
     }
     else if (strpos($url, 'contact') !== false) {
         $page = new Contact();
+        $page->index();
+    }
+    else if (strpos($url, 'search') !== false) {
+        $page = new Search();
         $page->index();
     }
     else {

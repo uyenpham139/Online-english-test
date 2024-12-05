@@ -45,7 +45,7 @@
 </section>
 
 <!-- Custom JS file link -->
-<script src="js/script.js"></script>
+<script src="FE/js/script.js"></script>
 
 </body>
 </html>

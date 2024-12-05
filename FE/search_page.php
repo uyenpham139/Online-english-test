@@ -12,7 +12,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="FE/css/style.css">
 
 </head>
 <body>
@@ -21,7 +21,7 @@
 
 <div class="heading">
    <h3>search page</h3>
-   <p> <a href="home.php">home</a> / search </p>
+   <p> <a href="index.php?page=home">home</a> / search </p>
 </div>
 
 <section class="search-form">
@@ -31,19 +31,10 @@
    </form>
 </section>
 
-
-
-
-
-
-
-
-
-
 <?php include 'footer.php'; ?>
 
 <!-- custom js file link  -->
-<script src="js/script.js"></script>
+<script src="FE/js/script.js"></script>
 
 </body>
 </html>

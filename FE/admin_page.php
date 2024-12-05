@@ -128,7 +128,7 @@
   </div>
 
   <!-- Link to external script.js -->
-  <script src="js/admin_script.js" defer></script>
+  <script src="FE/js/admin_script.js" defer></script>
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

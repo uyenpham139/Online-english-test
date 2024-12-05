@@ -3,20 +3,25 @@
 class Test extends Dbh {
 
     // Create a new test
-    protected function createTest($title, $description, $topic, $level, $testTime, $numOfQuest, $staffId) {
+    protected function createTest($title, $topic, $level, $testTime, $numOfQuest, $staffId) {
         $query = $this->connect()->prepare(
-            "INSERT INTO Test (title, description, topic, level, test_time, num_of_quest, staff_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO Test (title, topic, level, test_time, num_of_quest, staff_id) VALUES (?, ?, ?, ?, ?, ?)"
         );
 
-        $query->bind_param("ssssiii", $title, $description, $topic, $level, $testTime, $numOfQuest, $staffId);
+        $query->bind_param("ssssii", $title, $topic, $level, $testTime, $numOfQuest, $staffId);
 
         if (!$query->execute()) {
+            $error = $query->error;
             $query->close();
-            header("location: ../index.php?page=create-test&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed&message=" . urlencode($error));
             exit();
         }
 
+        // Get the last inserted test ID
+        $testId = $query->insert_id;
         $query->close();
+
+        return $testId;
     }
 
     // Delete a test by ID
@@ -25,8 +30,9 @@ class Test extends Dbh {
         $query->bind_param("i", $testId);
 
         if (!$query->execute()) {
+            $error = $query->error;
             $query->close();
-            header("location: ../index.php?page=manage-tests&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed&message=" . urlencode($error));
             exit();
         }
 
@@ -38,75 +44,75 @@ class Test extends Dbh {
         $query = $this->connect()->prepare("SELECT * FROM Test");
 
         if (!$query->execute()) {
+            $error = $query->error;
             $query->close();
-            header("location: ../index.php?page=tests&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed&message=" . urlencode($error));
             exit();
         }
 
         $result = $query->get_result();
         $query->close();
 
-        $tests = [];
-        while ($row = $result->fetch_assoc()) {
-            $tests[] = $row;
-        }
-
-        return $tests;
+        return $result->fetch_all(MYSQLI_ASSOC); // Fetch all tests as an array of associative arrays
     }
 
-    // Get tests by filter level
+    // Get tests by level
     protected function getTestByLevel($level) {
         $query = $this->connect()->prepare("SELECT * FROM Test WHERE level = ?");
         $query->bind_param("s", $level);
 
         if (!$query->execute()) {
+            $error = $query->error;
             $query->close();
-            header("location: ../index.php?page=tests&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed&message=" . urlencode($error));
             exit();
         }
 
         $result = $query->get_result();
         $query->close();
 
-        $tests = [];
-        while ($row = $result->fetch_assoc()) {
-            $tests[] = $row;
-        }
-
-        return $tests;
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Get test by ID
+    // Get a single test by ID
     protected function getTestById($testId) {
         $query = $this->connect()->prepare("SELECT * FROM Test WHERE id = ?");
         $query->bind_param("i", $testId);
 
         if (!$query->execute()) {
+            $error = $query->error;
             $query->close();
-            header("location: ../index.php?page=tests&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed&message=" . urlencode($error));
             exit();
         }
 
         $result = $query->get_result();
         $query->close();
 
-        return $result->fetch_assoc(); // Return a single test as an associative array
+        return $result->fetch_assoc(); // Fetch as a single associative array
     }
 
-    // Update test by ID
-    protected function updateTest($testId, $title, $description, $topic, $level, $testTime, $numOfQuest, $staffId) {
+    // Update a test by ID
+    protected function updateTest($testId, $title, $topic, $level, $testTime, $numOfQuest, $staffId) {
         $query = $this->connect()->prepare(
-            "UPDATE Test SET title = ?, description = ?, topic = ?, level = ?, test_time = ?, num_of_quest = ?, staff_id = ? WHERE id = ?"
+            "UPDATE Test SET title = ?, topic = ?, level = ?, test_time = ?, num_of_quest = ?, staff_id = ? WHERE id = ?"
         );
 
-        $query->bind_param("ssssiiii", $title, $description, $topic, $level, $testTime, $numOfQuest, $staffId, $testId);
+        $query->bind_param("sssiiii", $title, $topic, $level, $testTime, $numOfQuest, $staffId, $testId);
 
         if (!$query->execute()) {
+            $error = $query->error;
             $query->close();
-            header("location: ../index.php?page=manage-tests&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed&message=" . urlencode($error));
             exit();
         }
 
         $query->close();
+    }
+
+    // Validate test level
+    protected function isValidLevel($level) {
+        $validLevels = ['Beginner', 'Intermediate', 'Experienced', 'Advanced', 'Expert'];
+        return in_array($level, $validLevels, true);
     }
 }
