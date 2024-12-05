@@ -277,6 +277,10 @@ section{
    color:var(--purple);
 }
 
+.header .header-1 .flex p .delete-btn{
+   color:var(--white);
+}
+
 .header .header-1 .flex p a:hover{
    text-decoration: underline;
 }
@@ -351,13 +355,9 @@ section{
    margin-bottom: 1.5rem;
 }
 
-.header .header-2 .flex .user-box p span{
-   color:var(--purple);
-}
 
-.header .header-2 .flex .user-box .delete-btn{
-   margin-top: 0;
-}
+
+
 
 .home{
    min-height: 70vh;
