@@ -4,8 +4,11 @@
 
     $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
-    $name = 'home';
-    if (strpos($url, 'login') !== false) {
+    if (strpos($url, 'admin') !== false) {
+        $page = new Admin();
+        $page->index();
+    }
+    else if (strpos($url, 'login') !== false) {
         $page = new Login();
         $page->index();
     }

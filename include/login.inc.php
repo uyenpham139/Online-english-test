@@ -39,9 +39,9 @@ if(isset($_POST['submit'])) {
     // Going back to front page
         header("location: ../index.php?page=home");
     else if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
-        header("location: ../admin/index.php?page=dashboard");
+        header("location: ../index.php?/admin");
     else if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Staff')
-        header("location: ../staff/index.php?page=dashboard"); 
+        header("location: ../index.php?/manage"); 
 }
 
 ?>
