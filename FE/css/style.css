@@ -1139,3 +1139,21 @@ button {
    }
 }
 
+.question-overview {
+   list-style-type: none;
+   padding: 0;
+}
+
+.question-overview li {
+   display: flex;
+   justify-content: space-between;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+   margin-bottom: 10px;
+   background-color: #f9f9f9;
+}
+
+.question-overview button {
+   margin-left: 10px;
+}
