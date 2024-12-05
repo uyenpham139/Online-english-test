@@ -62,10 +62,12 @@ class User extends Dbh {
             }
             
             session_start();
+            $_SESSION["user_id"] = $user[0]["id"];
             $_SESSION["user_name"] = $user[0]["user_name"];
             $_SESSION["firstname"] = $user[0]["firstname"];
             $_SESSION["lastname"] = $user[0]["lastname"];
             $_SESSION["user_email"] = $user[0]["email"];
+            $_SESSION["user_role"] = $user[0]["role"];
 
             $query = null;
         }

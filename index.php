@@ -3,12 +3,8 @@
     include 'include/pagecontroller-autoLoad.inc.php';
 
     $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-    $path = 'controllers/';
-    $extension = ".contr.php";
 
     $name = 'home';
-    echo "<script> console.log($url); </script>";
-
     if (strpos($url, 'login') !== false) {
         $page = new Login();
         $page->index();

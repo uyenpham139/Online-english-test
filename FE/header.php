@@ -40,7 +40,7 @@
 
          <div class="icons">
             <div id="menu-btn" class="fas fa-bars"></div>
-            <a href="search_page.php" class="fas fa-search"></a>
+            <a href="index.php?page=search" class="fas fa-search"></a>
             <div id="user-btn" class="fas fa-user"></div>
          </div>
       </div>

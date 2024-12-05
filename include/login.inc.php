@@ -35,8 +35,13 @@ if(isset($_POST['submit'])) {
 
     $login->loginUser();
 
+    if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'User') 
     // Going back to front page
-    header("location: ../index.php?page=home");
+        header("location: ../index.php?page=home");
+    else if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
+        header("location: ../admin/index.php?page=dashboard");
+    else if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Staff')
+        header("location: ../staff/index.php?page=dashboard"); 
 }
 
 ?>
