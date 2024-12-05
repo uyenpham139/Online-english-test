@@ -1,7 +1,4 @@
-<?php
-// Ensure the session is started before using session variables
-session_start();
-?>
+
 
 <header class="header">
 
@@ -35,7 +32,7 @@ session_start();
             <div id="user-btn" class="fas fa-user"></div>
          </div>
 
-         <div class="user-box">
+         <div class="user-box.active">
             <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_email'])): ?>
                <p>username : <span><?php echo htmlspecialchars($_SESSION['user_name']); ?></span></p>
                <p>email : <span><?php echo htmlspecialchars($_SESSION['user_email']); ?></span></p>
@@ -48,3 +45,4 @@ session_start();
    </div>
 
 </header>
+

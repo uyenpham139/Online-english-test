@@ -1,6 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Grabbing the data
+    $username = "uuu132";
     $firstname = $_POST["name"];
     $lastname = "abc";
     $email = $_POST["email"];
@@ -12,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include "../models/dbh.model.php";
     include "../models/users.model.php";
     include "../controllers/registerController.php";
-    $signup = new RegisterController($firstname, $lastname, $email, $password, $repeatPassword, $role);
+    $signup = new RegisterController($username, $firstname, $lastname, $email, $password, $repeatPassword, $role);
 
     // Running error handlers and user signup
     $signup->signupUser();

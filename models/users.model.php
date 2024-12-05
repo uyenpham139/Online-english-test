@@ -60,24 +60,21 @@ class User extends Dbh {
                 setcookie("email", $email, time() + 20, "/");
                 setcookie("password", $hashedPassword, time() + 20, "/");
             }
+            
             session_start();
-            $_SESSION["userid"] = $user[0]["id"];
-            $_SESSION["username"] = $user[0]["email"];
+            $_SESSION["user_name"] = $user[0]["user_name"];
             $_SESSION["firstname"] = $user[0]["firstname"];
-            $_SESSION["middlename"] = $user[0]["middlename"];
             $_SESSION["lastname"] = $user[0]["lastname"];
+            $_SESSION["user_email"] = $user[0]["email"];
 
             $query = null;
         }
         $query = null;
     }
 
-    protected function setUser($pwd, $email, $firstname, $lastname, $role) {
+    protected function setUser($username, $pwd, $email, $firstname, $lastname, $role) {
 
-        // Table users
-        // $query = $this->connect()->prepare("INSERT INTO Users(username, user_password, email, first_name, middle_name, last_name) VALUES(?, ?, ?, ?, ?, ?);");
-
-        $query = $this->connect()->prepare("CALL insert_user(?, ?, ?, ?, ?, ?, ?)");
+        $query = $this->connect()->prepare("CALL insert_user(?, ?, ?, ?, ?, ?, ?, ?)");
 
         $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
         
@@ -86,11 +83,11 @@ class User extends Dbh {
         $defaultLevel = "Beginner";
 
         // Bind variables instead of literals
-        $query->bind_param("sssssis", $hashedPwd, $email, $firstname, $lastname, $role, $defaultStatus, $defaultLevel);
+        $query->bind_param("ssssssis", $username, $hashedPwd, $email, $firstname, $lastname, $role, $defaultStatus, $defaultLevel);
 
         if(!$query->execute()) {
             $query = null;
-            header("location: ../index.php?page=signup&error=queryfailed");
+            header("location: ../index.php?page=register&error=queryfailed");
             exit();
         }
         $query = null;
@@ -102,7 +99,7 @@ class User extends Dbh {
 
         if(!$query->execute()) {
             $query = null;
-            header("location: ../index.php?page=signup&error=queryfailed");
+            header("location: ../index.php?page=register&error=queryfailed");
             exit();
         }
 

@@ -1,6 +1,7 @@
 <?php
 
 class RegisterController extends User{
+    private $username;
     private $firstname;
     private $lastname;
     private $email;
@@ -8,7 +9,8 @@ class RegisterController extends User{
     private $repeatPassword;
     private $role;
 
-    public function __construct($firstname, $lastname, $email, $password, $repeatPassword, $role) {
+    public function __construct($username, $firstname, $lastname, $email, $password, $repeatPassword, $role) {
+        $this->username = $username;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
@@ -49,14 +51,14 @@ class RegisterController extends User{
             exit();
         }
 
-        $this->setUser($this->password, $this->email, $this->firstname, $this->lastname, $this->role);
+        $this->setUser($this->username, $this->password, $this->email, $this->firstname, $this->lastname, $this->role);
     }
 
     // Check whether the input is empty
     private function emptyInput() {
         $result = true;
         // Check if these inputs are empty
-        if(empty($this->firstname) || empty($this->lastname) 
+        if(empty($this->username) || empty($this->firstname) || empty($this->lastname) 
             || empty($this->email) || empty($this->password) 
             || empty($this->repeatPassword) ) {
                 $result = false;

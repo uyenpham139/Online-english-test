@@ -4,9 +4,8 @@ CREATE TABLE Users (
     user_password VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL,
     first_name VARCHAR(50),
-    middle_name VARCHAR(100),
     last_name VARCHAR(50),
-    role ENUM ("Admin", "Staff", "Student")
+    role ENUM ("Admin", "Staff", "User")
 );
 
 -- Create the Admin, Staff, and Students tables
@@ -22,17 +21,20 @@ CREATE TABLE Staff (
 
 CREATE TABLE Students (
     id INT PRIMARY KEY,
+    user_exp INT,
     level ENUM('Beginner', 'Intermediate', 'Experienced', 'Advanced', 'Expert'),
     FOREIGN KEY (id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE PROCEDURE insert_user(
+DELIMITER $$
+CREATE PROCEDURE `insert_user`(
+    IN p_user_name VARCHAR(255),
     IN p_user_password VARCHAR(255),
     IN p_email VARCHAR(100),
     IN p_first_name VARCHAR(50),
-    IN p_middle_name VARCHAR(100),
     IN p_last_name VARCHAR(50),
-    IN p_user_role ENUM("Admin", "Staff", "Student"),
+    IN p_user_role ENUM("Admin", "Staff", "User"),
+    IN p_user_exp INT,
     IN p_level ENUM('Beginner', 'Intermediate', 'Experienced', 'Advanced', 'Expert')
 )
 BEGIN
@@ -40,8 +42,8 @@ BEGIN
 
     start transaction;
     -- Insert into the users table
-    INSERT INTO Users (user_password, email, firstname, middlename, lastname, role)
-    VALUES (p_user_password, p_email, p_first_name, p_middle_name, p_last_name, p_user_role);
+    INSERT INTO Users (user_name, user_password, email, first_name, last_name, role)
+    VALUES (p_user_name, p_user_password, p_email, p_first_name, p_last_name, p_user_role);
 
     -- Get the newly inserted user ID
     SET @new_user_id = LAST_INSERT_ID();
@@ -54,13 +56,17 @@ BEGIN
         WHEN 'Staff' THEN
             INSERT INTO Staff(id)
             VALUES (@new_user_id);
-        WHEN 'Student' THEN
-            INSERT INTO Students(id, level)
-            VALUES (@new_user_id, p_level);
+        WHEN 'User' THEN
+            INSERT INTO Students(id, user_exp, level)
+            VALUES (@new_user_id, p_user_exp, p_level);
     END CASE;
 
     commit;
-END;
+END$$
+DELIMITER ;
+
+select * from Admin;
+select * from Students;
 
 -- Create the Test table
 CREATE TABLE Test (
