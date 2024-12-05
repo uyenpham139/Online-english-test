@@ -10,7 +10,19 @@
             <a href="#" class="fab fa-instagram"></a>
             <a href="#" class="fab fa-linkedin"></a>
          </div>
-         <p> new <a href="index.php?page=login">login</a> | <a href="index.php?page=register">register</a> </p>
+         
+         <?php if(isset($_SESSION['user_name'])): ?>
+            <!-- Show username and logout when logged in -->
+            <p>
+               Welcome, <span><?php echo $_SESSION['user_name']; ?></span> |
+               <a href="FE/logout.php" class="delete-btn">logout</a>
+            </p>
+         <?php else: ?>
+            <!-- Show login and register when not logged in -->
+            <p>
+               New <a href="index.php?page=login">login</a> | <a href="index.php?page=register">register</a>
+            </p>
+         <?php endif; ?>
       </div>
    </div>
 
@@ -30,16 +42,6 @@
             <div id="menu-btn" class="fas fa-bars"></div>
             <a href="search_page.php" class="fas fa-search"></a>
             <div id="user-btn" class="fas fa-user"></div>
-         </div>
-
-         <div class="user-box.active">
-            <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_email'])): ?>
-               <p>username : <span><?php echo htmlspecialchars($_SESSION['user_name']); ?></span></p>
-               <p>email : <span><?php echo htmlspecialchars($_SESSION['user_email']); ?></span></p>
-               <a href="FE/logout.php" class="delete-btn">logout</a>
-            <?php else: ?>
-               <p>Please <a href="/index.php?page=login">login</a> to see your details.</p>
-            <?php endif; ?>
          </div>
       </div>
    </div>

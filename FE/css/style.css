@@ -126,6 +126,7 @@ section{
 
 .delete-btn{
    background-color: var(--red);
+   color: var(--white);
 }
 
 .white-btn:hover{
@@ -276,6 +277,10 @@ section{
    color:var(--purple);
 }
 
+.header .header-1 .flex p .delete-btn{
+   color:var(--white);
+}
+
 .header .header-1 .flex p a:hover{
    text-decoration: underline;
 }
@@ -385,8 +390,6 @@ section{
    padding:1rem 0;
    line-height: 1.5;
 }
-
-
 
 .about .flex{
    max-width: 1200px;
