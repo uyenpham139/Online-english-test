@@ -111,4 +111,22 @@ class TestController extends Test {
 
         return $results; // Return the list of matching tests
     }
+
+    public static function getTestByTestId($testId) {
+        if (empty($testId)) {
+            header("location: ../index.php?page=manage-tests&error=emptyid");
+            exit();
+        }
+    
+        // Use the Test model to retrieve test details
+        $testModel = new Test();
+        $test = $testModel->getTestById($testId);
+    
+        if (!$test) {
+            header("location: ../index.php?page=manage-tests&error=testnotfound");
+            exit();
+        }
+    
+        return $test; // Return the test details as an associative array
+    }
 }
