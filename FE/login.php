@@ -26,7 +26,7 @@
       <input type="email" name="email" placeholder="enter your email" required class="box">
       <input type="password" name="password" placeholder="enter your password" required class="box">
       <input type="submit" name="submit" value="login now" class="btn">
-      <p>Don't have an account? <a href="index.php?page=signup">Register now</a></p>
+      <p>Don't have an account? <a href="index.php?page=register">Register now</a></p>
    </form>
 
 </div>

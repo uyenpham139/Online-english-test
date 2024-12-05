@@ -8,12 +8,12 @@
 
     $name = 'home';
     echo "<script> console.log($url); </script>";
-    
+
     if (strpos($url, 'login') !== false) {
         $page = new Login();
         $page->index();
     }
-    else if (strpos($url, 'signup') !== false) {
+    else if (strpos($url, 'register') !== false) {
         $page = new Register();
         $page->index();
     }
