@@ -544,26 +544,6 @@ section{
 
 
 
-.search-form form{
-   max-width: 1200px;
-   margin:0 auto;
-   display: flex;
-   gap:1rem;
-}
-
-.search-form form .btn{
-   margin-top: 0;
-}
-
-.search-form form .box{
-   width: 100%;
-   padding:1.2rem 1.4rem;
-   border:var(--border);
-   font-size: 2rem;
-   color:var(--black);
-   background-color: var(--light-bg);
-   border-radius: .5rem;
-}
 
 
 
@@ -1043,5 +1023,119 @@ button {
       font-size: 3rem;
    }
 
+}
+
+/* Search Form Section */
+.search-form {
+   padding: 20px;
+   background-color: #fff;
+   border-bottom: 1px solid #ddd;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-form form {
+   max-width: 1200px;
+   margin: 0 auto;
+   display: flex;
+   gap: 1rem;
+   align-items: center;
+}
+
+.search-form form .box {
+   width: 100%;
+   padding: 1.2rem 1.4rem;
+   border: 1px solid var(--border, #ccc); /* Defaults to #ccc if --border is not defined */
+   font-size: 2rem;
+   color: var(--black, #333); /* Defaults to #333 if --black is not defined */
+   background-color: var(--light-bg, #f9f9f9); /* Defaults to #f9f9f9 if --light-bg is not defined */
+   border-radius: 0.5rem;
+   transition: border-color 0.3s ease;
+}
+
+.search-form form .box:focus {
+   border-color: #007bff; /* Blue highlight on focus */
+   outline: none;
+}
+
+.search-form form select {
+   padding: 1.2rem 1.4rem;
+   border: 1px solid var(--border, #ccc);
+   font-size: 2rem;
+   color: var(--black, #333);
+   background-color: var(--light-bg, #f9f9f9);
+   border-radius: 0.5rem;
+   transition: border-color 0.3s ease;
+}
+
+.search-form form select:focus {
+   border-color: #007bff;
+   outline: none;
+}
+
+.search-form form .btn {
+   margin-top: 0;
+   padding: 1.2rem 2rem;
+   font-size: 1.8rem;
+   color: #fff;
+   background-color: #8e44ad;
+   border: none;
+   border-radius: 0.5rem;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+
+.search-form form .btn:hover {
+   background-color: #580577;
+}
+
+/* Results Section */
+.results {
+   padding: 20px;
+   max-width: 1200px;
+   margin: 20px auto;
+   background-color: #fff;
+   border: 1px solid #ddd;
+   border-radius: 8px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.results .result-item {
+   padding: 15px;
+   border-bottom: 1px solid #eee;
+}
+
+.results .result-item:last-child {
+   border-bottom: none;
+}
+
+.results .result-item h4 {
+   margin: 0;
+   font-size: 1.6rem;
+   color: #333;
+}
+
+.results .result-item p {
+   margin: 5px 0 0;
+   font-size: 1.4rem;
+   color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+   .search-form form {
+      flex-direction: column;
+      gap: 1.5rem;
+   }
+
+   .search-form form .box,
+   .search-form form select,
+   .search-form form .btn {
+      width: 100%;
+   }
+
+   .results {
+      margin: 10px;
+      padding: 15px;
+   }
 }
 
