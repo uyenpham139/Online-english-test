@@ -4,15 +4,13 @@ class QuestionController extends Question {
 
     private $content;
     private $weight;
-    private $type;
     private $pictures;
     private $testId;
 
     // Constructor to initialize properties
-    public function __construct($content, $weight, $type, $pictures, $testId) {
+    public function __construct($content, $weight, $pictures, $testId) {
         $this->content = $content;
         $this->weight = $weight;
-        $this->type = $type;
         $this->pictures = $pictures;
         $this->testId = $testId;
     }
@@ -20,19 +18,20 @@ class QuestionController extends Question {
     // Create a new question
     public function createQuestions() {
         // Validate input data
-        if (empty($this->content) || empty($this->weight) || empty($this->type) || empty($this->testId)) {
-            header("location: ../index.php?/manage&error=emptyfields");
+        if (empty($this->content) || empty($this->weight) || empty($this->testId)) {
+            header("location: ../index.php?/manage&error=emptyfieldsinquestions");
             exit();
         }
 
         // Call the model's createQuestion method
-        $this->createQuestion(
+        $questionId = $this->createQuestion(
             $this->content,
             $this->weight,
-            $this->type,
             $this->pictures,
             $this->testId
         );
+
+        return $questionId;
     }
 
     // Static method to delete a question by ID
@@ -57,6 +56,11 @@ class QuestionController extends Question {
         $questions = $questionModel->getQuestionsByTestId($testId);
 
         return $questions; // Return questions array to the caller
+    }
+
+    public static function getQuestionsCount($testId) {
+        $questionModel = new Question();
+        return $questionModel->getQuestionsCountByTestId($testId);
     }
 }
 ?>

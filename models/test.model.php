@@ -17,11 +17,13 @@ class Test extends Dbh {
             exit();
         }
 
-        // Get the last inserted test ID
+        // Get the last inserted testId
         $testId = $query->insert_id;
+
         $query->close();
 
-        return $testId;
+        // Return the testId and numOfQuest
+        return ['testId' => $testId, 'numOfQuest' => $numOfQuest];
     }
 
     // Delete a test by ID
@@ -46,7 +48,7 @@ class Test extends Dbh {
         if (!$query->execute()) {
             $error = $query->error;
             $query->close();
-            header("location: ../index.php?/manage&error=queryfailed&message=" . urlencode($error));
+            header("location: ../index.php?page=search&error=queryfailed&message=" . urlencode($error));
             exit();
         }
 
@@ -82,7 +84,7 @@ class Test extends Dbh {
         if (!$query->execute()) {
             $error = $query->error;
             $query->close();
-            header("location: ../index.php?/manage&error=queryfailed&message=" . urlencode($error));
+            header("location: ../index.php?page=....&error=queryfailed&message=" . urlencode($error));
             exit();
         }
 
@@ -114,5 +116,24 @@ class Test extends Dbh {
     protected function isValidLevel($level) {
         $validLevels = ['Beginner', 'Intermediate', 'Experienced', 'Advanced', 'Expert'];
         return in_array($level, $validLevels, true);
+    }
+
+    // Get tests by title containing a specific string
+    protected function getTestByTitleSearch($title) {
+        $query = $this->connect()->prepare("SELECT * FROM Test WHERE title LIKE ?");
+        $searchTerm = '%' . $title . '%';
+        $query->bind_param("s", $searchTerm);
+
+        if (!$query->execute()) {
+            $error = $query->error;
+            $query->close();
+            header("location: ../index.php?page=search&error=queryfailed&message=" . urlencode($error));
+            exit();
+        }
+
+        $result = $query->get_result();
+        $query->close();
+
+        return $result->fetch_all(MYSQLI_ASSOC); // Return all matching tests as an associative array
     }
 }

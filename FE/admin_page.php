@@ -16,10 +16,10 @@
   <!-- Sidebar -->
   <nav>
     <h2>Admin Panel</h2>
-    <a href="admin_page.php" id="dashboard-link" class="active">Dashboard</a>
+    <a href="index.php?/admin" id="dashboard-link" class="active">Dashboard</a>
     <a href="#" id="users-link">Users</a>
     <a href="#" id="exams-link">Exams</a>
-    <a href="#">Logout</a>
+    <a href="FE/logout.php">Logout</a>
   </nav>
 
   <!-- Main Content -->

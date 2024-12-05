@@ -43,10 +43,8 @@ class TestController extends Test {
             exit();
         }
 
-        echo 'Test time: '.$this->testTime;
-
-        // Call the model's createTest method
-        $testId = $this->createTest(
+        // Call the model's createTest method and capture the returned testId and numOfQuest
+        $result = $this->createTest(
             $this->title,
             $this->topic,
             $this->level,
@@ -55,7 +53,12 @@ class TestController extends Test {
             $this->staffId
         );
 
-        return $testId;
+        // Retrieve testId and numOfQuest from the result
+        $testId = $result['testId'];
+        $numOfQuest = $result['numOfQuest'];
+
+        // Return the testId and numOfQuest
+        return ['testId' => $testId, 'numOfQuest' => $numOfQuest];
     }
 
     // Static method to delete a test by ID
@@ -94,5 +97,18 @@ class TestController extends Test {
 
         $testModel = new Test();
         $testModel->updateTest($testId, $title, $topic, $level, $testTime, $numOfQuest, $staffId);
+    }
+
+    // Search for tests by title (static method)
+    public static function searchTestByTitle($title) {
+        if (empty($title)) {
+            header("location: ../index.php?page=search&error=emptysearchterm");
+            exit();
+        }
+
+        $testModel = new Test();
+        $results = $testModel->getTestByTitleSearch($title);
+
+        return $results; // Return the list of matching tests
     }
 }

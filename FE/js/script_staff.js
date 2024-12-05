@@ -4,27 +4,37 @@ const questionsList = document.getElementById("questionsList");
 document.getElementById("addQuestionBtn").addEventListener("click", function () {
     const questionId = new Date().getTime(); // Unique ID for each question
     const questionItemHtml = `
-    <div class="question-item" data-id="${questionId}">
-        <h6 contenteditable="true">New Question (Click to Edit)</h6>
-        <input type="file" class="form-control" name="question" id="questionImage" accept="image/png, image/jpeg">
-        <img id="previewImage" class="image-preview" alt="Image Preview">
-        <p>A. <span contenteditable="true"> Option A</span></p>
-        <p>B. <span contenteditable="true"> Option B</span></p>
-        <p>C. <span contenteditable="true"> Option C</span></p>
-        <p>D. <span contenteditable="true"> Option D</span></p>
-        <div class="correct-answer">
-            <label for="correct-answer-${questionId}">Correct Answer:</label>
-            <select id="correct-answer-${questionId}" name="correct-answer" class="form-control">
-                <option value="A">Option A</option>
-                <option value="B">Option B</option>
-                <option value="C">Option C</option>
-                <option value="D">Option D</option>
-            </select>
-        <div class="question-actions">
-        <button class="btn btn-warning btn-sm update-btn">Update</button>
-        <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+    <form method="POST" action="include/test.inc.php">
+        <div class="question-item" data-id="${questionId}">
+            <label for="question-${questionId}">Question:</label>
+            <input type="text" id="question-${questionId}" name="question" class="form-control" placeholder="Enter your question">
+            <input type="file" class="form-control" id="questionImage" name="picture" accept="image/png, image/jpeg">
+            <img id="previewImage" class="image-preview" alt="Image Preview">
+            <div class="options">
+                <label>A:</label>
+                <input type="text" name="answer_1" class="form-control" value="Option A">
+                <label>B:</label>
+                <input type="text" name="answer_2" class="form-control" value="Option B">
+                <label>C:</label>
+                <input type="text" name="answer_3" class="form-control" value="Option C">
+                <label>D:</label>
+                <input type="text" name="answer_4" class="form-control" value="Option D">
+            </div>
+            <div class="correct-answer">
+                <label for="correct-answer-${questionId}">Correct Answer:</label>
+                <select id="correct-answer-${questionId}" name="correct_answer" class="form-control">
+                    <option value="Option A">Option A</option>
+                    <option value="Option B">Option B</option>
+                    <option value="Option C">Option C</option>
+                    <option value="Option D">Option D</option>
+                </select>
+            </div>
+            <div class="question-actions">
+                <button type="submit" name="submit_exam_questions" class="btn btn-warning btn-sm update-btn">Update</button>
+                <button type="button" class="btn btn-danger btn-sm delete-btn">Delete</button>
+            </div>
         </div>
-    </div>
+    </form>
     `;
 
     questionsList.insertAdjacentHTML("beforeend", questionItemHtml);

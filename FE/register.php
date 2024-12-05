@@ -24,9 +24,11 @@
 <div class="form-container">
 
    <form action="include/register.inc.php" method="post">
-      <h3>register now</h3>
-      <input type="text" name="name" placeholder="enter your name" required class="box">
+   <h3>register now</h3>
+      <input type="text" name="username" placeholder="enter your username" required class="box">
       <input type="email" name="email" placeholder="enter your email" required class="box">
+      <input type="text" name="fname" placeholder="enter your first name" required class="box">
+      <input type="text" name="lname" placeholder="enter your last name" required class="box">
       <input type="password" name="password" placeholder="enter your password" required class="box">
       <input type="password" name="cpassword" placeholder="confirm your password" required class="box">
       <select name="user_type" class="box">

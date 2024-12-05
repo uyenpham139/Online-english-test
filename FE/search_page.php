@@ -25,11 +25,12 @@
 </div>
 
 <section class="search-form">
-   <form action="" method="post">
+   <form action="include/student.inc.php" method="post">
       <input type="text" name="search" placeholder="search tests..." class="box">
-      <input type="submit" name="submit" value="search" class="btn">
+      <input type="submit" name="submit_search" value="search" class="btn">
    </form>
 </section>
+
 
 <?php include 'footer.php'; ?>
 

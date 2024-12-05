@@ -6,11 +6,11 @@ class Answer extends Dbh {
     protected function createAnswer($content, $questionId, $testId, $correct) {
         $query = $this->connect()->prepare("INSERT INTO Answer (content, question_id, test_id, correct) VALUES (?, ?, ?, ?)");
 
-        $query->bind_param("siib", $content, $questionId, $testId, $correct);
+        $query->bind_param("siii", $content, $questionId, $testId, $correct);
 
         if (!$query->execute()) {
             $query->close();
-            header("location: ../index.php?page=create-answer&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed");
             exit();
         }
 
@@ -24,7 +24,7 @@ class Answer extends Dbh {
 
         if (!$query->execute()) {
             $query->close();
-            header("location: ../index.php?page=manage-answers&error=queryfailed");
+            header("location: ../index.php?/manage&error=queryfailed");
             exit();
         }
 

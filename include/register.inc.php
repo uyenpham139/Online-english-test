@@ -1,9 +1,9 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Grabbing the data
-    $username = "uuu132";
-    $firstname = $_POST["name"];
-    $lastname = "abc";
+    $username = $_POST['username'];
+    $firstname = $_POST["fname"];
+    $lastname = $_POST["lname"];
     $email = $_POST["email"];
     $password = $_POST["password"];
     $repeatPassword = $_POST["cpassword"];

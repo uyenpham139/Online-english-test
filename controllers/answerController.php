@@ -19,7 +19,7 @@ class AnswerController extends Answer {
     public function createAnswers() {
         // Validate input data
         if (empty($this->content) || empty($this->questionId) || empty($this->testId)) {
-            header("location: ../index.php?page=create-answer&error=emptyfields");
+            header("location: ../index.php?/manage&error=emptyfieldsinanswer");
             exit();
         }
 
@@ -30,9 +30,6 @@ class AnswerController extends Answer {
             $this->testId,
             $this->correct
         );
-
-        header("location: ../index.php?/manage&success=answercreated");
-        exit();
     }
 
     // Static method to delete an answer by ID
@@ -44,15 +41,12 @@ class AnswerController extends Answer {
 
         $answerModel = new Answer();
         $answerModel->deleteAnswer($answerId);
-
-        header("location: ../index.php?/manage&success=answerdeleted");
-        exit();
     }
 
     // Static method to get all answers by question ID
     public static function getAnswers($questionId) {
         if (empty($questionId)) {
-            header("location: ../index.php?page=answers&error=emptyid");
+            header("location: ../index.php?page=test&error=emptyid");
             exit();
         }
 
@@ -65,7 +59,7 @@ class AnswerController extends Answer {
     // Static method to get all correct answers by test ID
     public static function getCorrectAnswers($testId) {
         if (empty($testId)) {
-            header("location: ../index.php?page=answers&error=emptyid");
+            header("location: ../index.php?page=test&error=emptyid");
             exit();
         }
 

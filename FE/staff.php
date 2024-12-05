@@ -49,8 +49,27 @@
               <label for="displayLimit" class="form-label">Number of questions</label>
               <input type="number" name="question-no" id="displayLimit" class="form-control" placeholder="Number of questions to display" required>
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" name="submit_exam_info" class="btn btn-primary">Update</button>
           </form>
+          <?php if (isset($_SESSION['numOfQuest'])): ?>
+              <!-- Display message for max number of questions -->
+              <p class="text">Maximum number of questions: <span> <?php echo $_SESSION['numOfQuest']; ?></span></p>
+              <p class="text">The number of questions created: <span> 
+                <?php 
+                    if (isset($_SESSION['question_created'])) {
+                        echo $_SESSION['question_created']; 
+                    } else {
+                        echo "0"; 
+                    }
+                ?>
+              </span></p>
+              
+              <!-- Check if the number of created questions equals the max questions -->
+              <?php if (isset($_SESSION['question_created']) && $_SESSION['question_created'] == $_SESSION['numOfQuest']): ?>
+                  <p class="text-success">Test successfully created! Please create a new test.</p>
+              <?php endif; ?>
+          <?php endif; ?>
+
         </div>
       </div>
 
@@ -61,12 +80,15 @@
             Exam Questions
             <button class="btn btn-primary btn-add-question" id="addQuestionBtn">Add Question</button>
           </h4>
+
+          <?php if (!isset($_SESSION['testId']) || !isset($_SESSION['numOfQuest'])): ?>
+              <!-- Display message if test is not created yet -->
+              <p class="text-danger">Please create a new test before adding questions.</p>
+          <?php endif; ?>
           
-          <form action="include/test.inc.php" method="post">
-            <div id="questionsList">
-              <!-- Placeholder for questions -->
-            </div>
-          </form>
+          <div id="questionsList">
+            <!-- Placeholder for questions -->
+          </div>
         </div>
       </div>
     </div>
