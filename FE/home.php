@@ -10,30 +10,28 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
    <!-- Custom CSS file link -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="FE/css/style.css">
 
 </head>
 <body>
-   
-<?php include 'header.php'; ?>
 
 <section class="home">
    <div class="content">
       <h3>Test Your English Skills Today!</h3>
       <p>Enhance your grammar, vocabulary, and comprehension with our engaging tests and quizzes. Start your journey to English mastery now!</p>
-      <a href="search_page.php" class="white-btn">Start now</a>
+      <a href="index.php?page=search" class="white-btn">Start now</a>
    </div>
 </section>
 
 <section class="about">
    <div class="flex">
       <div class="image">
-         <img src="images/about-img.jpg" alt="About Us">
+         <img src="FE/images/about-img.jpg" alt="About Us">
       </div>
       <div class="content">
          <h3>About Our Platform</h3>
          <p>We provide a comprehensive suite of English tests designed to challenge your skills and improve your fluency. Suitable for learners of all levels!</p>
-         <a href="about.php" class="btn">Read More</a>
+         <a href="index.php?page=about" class="btn">Read More</a>
       </div>
    </div>
 </section>
@@ -42,11 +40,9 @@
    <div class="content">
       <h3>Have Any Questions?</h3>
       <p>Contact us for support, tips, and guidance on improving your English skills.</p>
-      <a href="contact.php" class="white-btn">Contact Us</a>
+      <a href="index.php?page=contact" class="white-btn">Contact Us</a>
    </div>
 </section>
-
-<?php include 'footer.php'; ?>
 
 <!-- Custom JS file link -->
 <script src="js/script.js"></script>

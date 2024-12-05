@@ -16,8 +16,6 @@
 
 </head>
 <body>
-   
-<?php include 'header.php'; ?>
 
 <div class="heading">
    <h3>contact us</h3>
@@ -36,15 +34,6 @@
    </form>
 
 </section>
-
-
-
-
-
-
-
-
-<?php include 'footer.php'; ?>
 
 <!-- custom js file link  -->
 <script src="js/script.js"></script>
