@@ -1,27 +1,24 @@
 const questionsList = document.getElementById("questionsList");
-
-const questionsOverview = document.getElementById("questionsOverview");
+const overviewList = document.getElementById("overviewList");
 
 // Add Question Functionality
 document.getElementById("addQuestionBtn").addEventListener("click", function () {
     const questionId = new Date().getTime(); // Unique ID for each question
-    const questionText = `Question ${questionsList.childElementCount + 1}`;
-
     const questionItemHtml = `
     <div class="question-item" data-id="${questionId}">
-         <label for="question-${questionId}">Question:</label>
-        <input type="text" id="question-${questionId}" class="form-control" placeholder="Enter your question">
-        <input type="file" class="form-control" id="questionImage" accept="image/png, image/jpeg">
-        <img id="previewImage" class="image-preview" alt="Image Preview">
+        <label for="question-${questionId}">Question:</label>
+        <input type="text" id="question-${questionId}" class="form-control question-input" placeholder="Enter your question">
+        <input type="file" class="form-control" id="questionImage-${questionId}" accept="image/png, image/jpeg">
+        <img id="previewImage-${questionId}" class="image-preview" alt="Image Preview">
         <div class="options">
             <label>A:</label>
-            <input type="text" class="form-control" value="Option A">
+            <input type="text" class="form-control option-input" data-option="A" value="Option A">
             <label>B:</label>
-            <input type="text" class="form-control" value="Option B">
+            <input type="text" class="form-control option-input" data-option="B" value="Option B">
             <label>C:</label>
-            <input type="text" class="form-control" value="Option C">
+            <input type="text" class="form-control option-input" data-option="C" value="Option C">
             <label>D:</label>
-            <input type="text" class="form-control" value="Option D">
+            <input type="text" class="form-control option-input" data-option="D" value="Option D">
         </div>
         <div class="correct-answer">
             <label for="correct-answer-${questionId}">Correct Answer:</label>
@@ -31,83 +28,71 @@ document.getElementById("addQuestionBtn").addEventListener("click", function () 
                 <option value="C">Option C</option>
                 <option value="D">Option D</option>
             </select>
-        <div class="question-actions">
-        <button class="btn btn-warning btn-sm update-btn">Update</button>
-        
         </div>
     </div>
     `;
 
     questionsList.insertAdjacentHTML("beforeend", questionItemHtml);
 
-     // Add to overview list
-     const overviewItemHtml = `
-     <li data-id="${questionId}">
-         <span>${questionText}</span>
-         <button class="btn btn-sm btn-danger delete-overview-btn">Delete</button>
-     </li>`;
-     questionsOverview.insertAdjacentHTML("beforeend", overviewItemHtml);
+    // Handle image preview
+    const fileInput = document.getElementById(`questionImage-${questionId}`);
+    const previewImage = document.getElementById(`previewImage-${questionId}`);
 
-    const fileInput = document.getElementById('questionImage');
-    const previewImage = document.getElementById('previewImage');
-
-    const fileInputs = questionsList.querySelectorAll('.questionImage');
-    fileInputs.forEach(fileInput => {
-        fileInput.addEventListener('change', function () {
-            const file = this.files[0];
-            const previewImage = this.nextElementSibling;
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.style.display = 'none';
-            }
-        });
+    fileInput.addEventListener("change", function () {
+        const file = this.files[0]; // Get the selected file
+        if (file) {
+            const reader = new FileReader(); // Create a FileReader to read the file
+            reader.onload = function (e) {
+                previewImage.src = e.target.result; // Set the image source to the file content
+                previewImage.style.display = "block"; // Show the preview image
+            };
+            reader.readAsDataURL(file); // Read the file as a Data URL
+        } else {
+            previewImage.style.display = "none"; // Hide the image if no file is selected
+        }
     });
 
-
-    
+    updateOverview(); // Update the overview when a question is added
 });
 
+// Function to update the overview
+function updateOverview() {
+    overviewList.innerHTML = ""; // Clear existing overview
 
-// Event delegation for Update and Delete buttons
-questionsList.addEventListener("click", function (event) {
-    const target = event.target;
+    // Get all questions
+    const questionItems = document.querySelectorAll(".question-item");
+    questionItems.forEach((questionItem, index) => {
+        const questionText = questionItem.querySelector(".question-input").value || `Question ${index + 1}`;
+        const options = questionItem.querySelectorAll(".option-input");
+        const correctAnswer = questionItem.querySelector(".correct-answer select").value;
 
-    // Handle Delete button in question container
-    if (target.classList.contains("delete-btn")) {
-        const questionItem = target.closest(".question-item");
-        const questionId = questionItem.dataset.id;
+        let optionsHtml = "";
+        options.forEach((option) => {
+            const optionValue = option.dataset.option;
+            const optionText = option.value;
+            optionsHtml += `<li>${optionValue}: ${optionText}</li>`;
+        });
 
-        // Remove the question from the list
-        questionItem.remove();
+        const overviewHtml = `
+        <div class="overview-item">
+            <h5>${index + 1}. ${questionText}</h5>
+            <ul>${optionsHtml}</ul>
+            <p><strong>Correct Answer:</strong> ${correctAnswer}</p>
+        </div>
+        `;
+        overviewList.insertAdjacentHTML("beforeend", overviewHtml);
+    });
+}
 
-        // Remove the corresponding overview entry
-        const overviewItem = questionsOverview.querySelector(`[data-id="${questionId}"]`);
-        if (overviewItem) overviewItem.remove();
+// Event delegation to detect changes in question text or options and update the overview
+questionsList.addEventListener("input", function (event) {
+    if (event.target.classList.contains("question-input") || event.target.classList.contains("option-input")) {
+        updateOverview(); // Update the overview whenever inputs change
     }
 });
 
-questionsOverview.addEventListener("click", function (event) {
-    const target = event.target;
-
-    // Handle Delete button in the overview list
-    if (target.classList.contains("delete-overview-btn")) {
-        const overviewItem = target.closest("li");
-        const questionId = overviewItem.dataset.id;
-
-        // Remove the question from the container
-        const questionItem = questionsList.querySelector(`[data-id="${questionId}"]`);
-        if (questionItem) questionItem.remove();
-
-        // Remove the overview entry
-        overviewItem.remove();
+questionsList.addEventListener("change", function (event) {
+    if (event.target.tagName === "SELECT") {
+        updateOverview(); // Update the overview whenever the correct answer changes
     }
 });
-
-
-     
